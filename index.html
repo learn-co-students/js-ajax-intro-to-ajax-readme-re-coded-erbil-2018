@@ -27,7 +27,49 @@
       <div>
         <h3>Commits</h3>
       </div>
+      <div>
+  <h3>Repositories</h3>
+  <a href="#" onclick="getRepositories()">Get Repositories</a>
+</div><div>
+  <h3>Repositories</h3>
+  <a href="#" onclick="getRepositories()">Get Repositories</a>
+  <div id="repositories"></div>
+</div>
     </div>
-    <script src="index.js"></script>
+    <script src="index.js">
+      function getRepositories() {
+  const req = new XMLHttpRequest();
+  req.open('GET', 'https://api.github.com/users/octocat/repos');
+  req.send();
+  function showRepositories() {
+  //this is set to the XMLHttpRequest object that fired the event
+  console.log(this.responseText);
+}
+ 
+function getRepositories() {
+  const req = new XMLHttpRequest();
+  req.addEventListener('load', showRepositories);
+  req.open('GET', 'https://api.github.com/users/octocat/repos');
+  req.send();
+}
+function showRepositories() {
+  const req = new XMLHttpRequest();
+  req.addEventListener('load', showRepositories);
+  req.open('GET', 'https://api.github.com/users/octocat/repos');
+  req.send(); //this is set to the XMLHttpRequest object that fired the event
+  console.log(this.responseText);
+}
+ 
+function showRepositories() {
+  console.log(this.responseText);
+  let repoList = '<ul>';
+  for (var i = 0; i < this.responseText.length; i++) {
+    repoList += '<li>' + this.responseText[i]['name'] + '</li>';
+  }
+  repoList += '</ul>';
+  document.getElementById('repositories').innerHTML = repoList;
+}
+}
+    </script>
   </body>
 </html>
